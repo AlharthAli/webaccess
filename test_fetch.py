@@ -33,3 +33,21 @@ for i in range(1, len(levels)):
     if curr > prev:
         if curr - prev != 1:
             print(f"Heading level skipped: went from h{prev} to h{curr}")
+
+inputs = soup.find_all("input")
+for inp in inputs:
+    if inp.get("type") == "hidden":
+        continue
+    if inp.get("aria-label"):
+        continue
+
+    input_id = inp.get("id")
+
+    if not input_id:
+        print(f"Unlabeled input (no id at all): {inp}")
+        continue
+
+    matching_label = soup.find("label", attrs={"for": input_id})
+
+    if matching_label is None:
+        print(f"Unlabeled input (no matching label): {inp}")

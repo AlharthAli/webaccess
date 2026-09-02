@@ -10,6 +10,9 @@ headers = {
 response = requests.get(url, headers=headers)
 soup = BeautifulSoup(response.text, "html.parser")
 
+if soup.title is None or not soup.title.text.strip():
+    print("Missing page title")
+
 images = soup.find_all("img")
 for img in images:
     if img.get("aria-hidden") == "true":

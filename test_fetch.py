@@ -51,3 +51,13 @@ for inp in inputs:
 
     if matching_label is None:
         print(f"Unlabeled input (no matching label): {inp}")
+
+vague_phrases = ["click here", "read more", "here", "more", "link"]
+
+links = soup.find_all("a")
+for link in links:
+    link_text = link.text.lower()
+    link_text = link_text.strip()
+
+    if link_text in vague_phrases:
+        print(f"Non-descriptive link text: '{link.text}'")

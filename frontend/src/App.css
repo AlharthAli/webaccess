@@ -159,6 +159,10 @@
   text-align: center;
 }
 
+.input-row.has-error {
+  border-color: var(--red);
+}
+
 .input-error {
   margin-top: 10px;
   padding: 10px 14px;
@@ -167,6 +171,15 @@
   border-radius: var(--radius);
   color: var(--red);
   font-size: 0.875rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+}
+
+.input-error-icon {
+  flex-shrink: 0;
+  margin-top: 1px;
 }
 
 /* ─── Rule Legend ─────────────────────────────────────────── */
@@ -223,6 +236,14 @@
   border: 1px solid var(--border);
   border-radius: 3px;
   padding: 1px 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.rule-legend-label {
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  min-width: 0;
 }
 
 /* ─── Loading Screen ──────────────────────────────────────── */
@@ -896,3 +917,140 @@
 .compare-type-item--red  .compare-type-code   { color: var(--red); }
 .compare-type-item--green .compare-type-bullet { color: var(--green); }
 .compare-type-item--green .compare-type-code   { color: var(--green); }
+
+/* ─── Why This Matters note ──────────────────────────────── */
+.why-note {
+  width: 100%;
+  margin: 28px 0 32px;
+  padding: 14px 16px;
+  border-left: 3px solid var(--border-strong);
+  background: var(--surface);
+}
+
+.why-note p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+/* ─── Responsive: 640px and below ───────────────────────── */
+@media (max-width: 640px) {
+
+  /* Header */
+  .header {
+    padding: 0 16px;
+    height: 52px;
+  }
+
+  .header-sub {
+    display: none;          /* too cramped alongside wordmark on small phones */
+  }
+
+  /* Input screen */
+  .input-screen {
+    padding: 48px 0 40px;  /* .main already provides 24px side padding */
+    justify-content: flex-start;
+  }
+
+  .input-screen-title {
+    font-size: 1.5rem;
+  }
+
+  /* Scan button: keep it comfortably tappable */
+  .scan-btn {
+    padding: 14px 18px;
+    min-height: 48px;
+  }
+
+  .url-input {
+    min-height: 48px;
+    font-size: 1rem;        /* avoid iOS auto-zoom on inputs < 16px */
+  }
+
+  /* Rule legend: let the label wrap below the icon + code */
+  .rule-legend-item {
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    padding: 10px 14px;
+    align-items: flex-start;
+  }
+
+  .rule-legend-label {
+    flex-basis: 100%;       /* push label to its own line under icon+code */
+    padding-left: 24px;     /* align with the code badge (icon width + gap) */
+    font-size: 0.8rem;
+  }
+
+  /* Why note */
+  .why-note {
+    margin: 20px 0 24px;
+  }
+
+  /* Loading screen */
+  .loading-screen {
+    padding: 48px 0 40px;
+    justify-content: flex-start;
+  }
+
+  /* Results */
+  .results-view {
+    padding: 24px 0 48px;
+  }
+
+  .report-header-top {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  /* Ensure URL doesn't force the badge off-screen */
+  .report-header-left {
+    flex: 1 1 200px;
+    min-width: 0;
+  }
+
+  .violation-badge {
+    flex-shrink: 0;
+  }
+
+  /* Violations: reduce the left indent on mobile */
+  .violation-item {
+    padding: 10px 14px 10px 14px;
+  }
+
+  /* Collapsible group toggle: ensure 44px touch target */
+  .group-toggle {
+    min-height: 44px;
+    padding: 12px 14px;
+  }
+
+  /* Panel toggles */
+  .panel-toggle {
+    min-height: 44px;
+    padding: 12px 14px;
+  }
+
+  /* History items */
+  .history-item {
+    flex-wrap: wrap;
+    gap: 4px 10px;
+    padding: 10px 14px;
+    min-height: 44px;
+  }
+
+  .history-item-date {
+    margin-left: 0;
+    flex-basis: 100%;
+    padding-left: 23px;     /* indent under clock icon */
+    color: var(--text-faint);
+    font-size: 0.75rem;
+  }
+
+  /* Compare */
+  .compare-meta {
+    padding: 10px 14px;
+  }
+
+  .compare-section {
+    padding: 12px 14px;
+  }
+}

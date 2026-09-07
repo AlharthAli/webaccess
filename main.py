@@ -107,4 +107,18 @@ def scan_website(request: ScanRequest):
         "total_violations": len(violations),
         "violations": violations
     }
+
+@app.get("/scans")
+def get_scan_history(url: str):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT * FROM scans WHERE url = %s ORDER BY scanned_at DESC",
+        (url,)
+    )
+    rows = cursor.fetchall()
+
+    conn.close()
+    return rows
     

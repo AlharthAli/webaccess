@@ -7,11 +7,11 @@ import LoadingScreen from './components/LoadingScreen'
 import ResultsView   from './components/ResultsView'
 import { API_BASE }  from './api'
 
-const SCAN_TIMEOUT_MS = 20_000
+const SCAN_TIMEOUT_MS = 60_000
 
 function humanError(err) {
   if (err.name === 'AbortError') {
-    return 'The scan timed out after 20 seconds. The URL may be unreachable, blocking automated requests, or too slow to respond.'
+    return 'The scan timed out after 60 seconds. The URL may be unreachable, blocking automated requests, or too slow to respond.'
   }
   if (!navigator.onLine) {
     return 'No internet connection detected. Check your network and try again.'

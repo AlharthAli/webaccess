@@ -1,4 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import requests
 from bs4 import BeautifulSoup
@@ -10,6 +12,20 @@ from datetime import datetime
 load_dotenv()
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Return JSON on unhandled exceptions so CORS headers are always present.
+# Raw uvicorn 500s have no CORS headers, which causes browsers to silently
+# block the response and report a network error instead of the real status.
+@app.exception_handler(Exception)
+async def unhandled_exception_handler(request: Request, exc: Exception):
+    return JSONResponse(status_code=500, content={"detail": str(exc)})
 
 headers = {
     "User-Agent": "WebAccessScanner/1.0 (educational project; contact: alharthali610@gmail.com)"

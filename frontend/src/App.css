@@ -1,0 +1,625 @@
+/* ─── Layout Shell ───────────────────────────────────────── */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Header ─────────────────────────────────────────────── */
+.header {
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg);
+  flex-shrink: 0;
+}
+
+.header-wordmark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-icon {
+  color: var(--red);
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.header-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.header-sub {
+  font-size: 0.8125rem;
+  color: var(--text-faint);
+  border-left: 1px solid var(--border);
+  padding-left: 12px;
+  margin-left: 2px;
+}
+
+/* ─── Main Content ───────────────────────────────────────── */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 24px;
+}
+
+/* ─── Input Screen ───────────────────────────────────────── */
+.input-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  max-width: 640px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.input-screen-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 16px;
+}
+
+.input-screen-title {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.input-screen-desc {
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: 40px;
+  max-width: 420px;
+}
+
+.scan-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.input-row {
+  display: flex;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #fff;
+  transition: border-color 0.15s;
+}
+
+.input-row:focus-within {
+  border-color: var(--text);
+}
+
+.url-input {
+  flex: 1;
+  padding: 13px 16px;
+  font-family: var(--font);
+  font-size: 0.9375rem;
+  color: var(--text);
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.url-input::placeholder {
+  color: var(--text-faint);
+}
+
+.scan-btn {
+  padding: 13px 24px;
+  background: var(--text);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: background 0.15s;
+  white-space: nowrap;
+  border-radius: 0;
+}
+
+.scan-btn:hover:not(:disabled) {
+  background: #2d2d2d;
+}
+
+.scan-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.scan-form-hint {
+  margin-top: 12px;
+  font-size: 0.8125rem;
+  color: var(--text-faint);
+  text-align: center;
+}
+
+.input-error {
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: var(--red-bg);
+  border: 1px solid var(--red-border);
+  border-radius: var(--radius);
+  color: var(--red);
+  font-size: 0.875rem;
+}
+
+/* ─── Rule Legend ─────────────────────────────────────────── */
+.rule-legend {
+  margin-top: 56px;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.rule-legend-header {
+  padding: 11px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.rule-legend-list {
+  list-style: none;
+}
+
+.rule-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.rule-legend-item:last-child {
+  border-bottom: none;
+}
+
+.rule-legend-icon {
+  color: var(--text-faint);
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.rule-legend-code {
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Cascadia Code', monospace;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1px 6px;
+}
+
+/* ─── Loading Screen ──────────────────────────────────────── */
+.loading-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  gap: 0;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.loading-header {
+  margin-bottom: 36px;
+  text-align: center;
+}
+
+.loading-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 8px;
+}
+
+.loading-url {
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+  word-break: break-all;
+  font-weight: 500;
+}
+
+.loading-steps {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.loading-step {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.875rem;
+  transition: background 0.2s;
+}
+
+.loading-step:last-child {
+  border-bottom: none;
+}
+
+.loading-step.done {
+  background: var(--green-bg);
+}
+
+.loading-step.active {
+  background: var(--amber-bg);
+}
+
+.loading-step.pending {
+  background: var(--bg);
+}
+
+.step-indicator {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-strong);
+}
+
+.step-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--amber-border);
+  border-top-color: var(--amber);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.step-check {
+  color: var(--green);
+  width: 16px;
+  height: 16px;
+}
+
+.step-text {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.loading-step.done .step-text {
+  color: var(--green);
+  font-weight: 500;
+}
+
+.loading-step.active .step-text {
+  color: var(--amber);
+  font-weight: 600;
+}
+
+/* ─── Results View ────────────────────────────────────────── */
+.results-view {
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 36px 0 64px;
+}
+
+/* Report header bar */
+.report-header {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 28px;
+}
+
+.report-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  gap: 16px;
+}
+
+.report-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.report-eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.report-url {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text);
+  word-break: break-all;
+}
+
+.report-scan-id {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  font-family: ui-monospace, 'Cascadia Code', monospace;
+}
+
+.violation-badge {
+  flex-shrink: 0;
+  padding: 6px 16px;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.violation-badge.has-violations {
+  background: var(--red-bg);
+  border: 1.5px solid var(--red-border);
+  color: var(--red);
+}
+
+.violation-badge.no-violations {
+  background: var(--green-bg);
+  border: 1.5px solid var(--green-border);
+  color: var(--green);
+}
+
+.violation-badge-count {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.violation-badge-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+/* Report metadata row */
+.report-meta {
+  display: flex;
+  gap: 24px;
+  padding: 11px 20px;
+  background: var(--bg);
+  flex-wrap: wrap;
+}
+
+.report-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.report-meta-icon {
+  color: var(--text-faint);
+  width: 13px;
+  height: 13px;
+}
+
+/* Pass state */
+.all-passed {
+  padding: 48px 20px;
+  text-align: center;
+}
+
+.all-passed-icon {
+  color: var(--green);
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 16px;
+}
+
+.all-passed-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 6px;
+}
+
+.all-passed-desc {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+/* Section header above violation groups */
+.violations-section-header {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.violations-section-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* ─── Violation Group ─────────────────────────────────────── */
+.violation-group {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.group-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid transparent;
+  text-align: left;
+  transition: background 0.12s;
+  user-select: none;
+}
+
+.group-toggle:hover {
+  background: var(--surface-2);
+}
+
+.group-toggle.open {
+  border-bottom-color: var(--border);
+}
+
+.group-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--red);
+}
+
+.group-name {
+  flex: 1;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text);
+  font-family: ui-monospace, 'Cascadia Code', monospace;
+}
+
+.group-count {
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--red-bg);
+  color: var(--red);
+  border: 1px solid var(--red-border);
+  border-radius: 3px;
+  padding: 1px 7px;
+  font-family: var(--font);
+}
+
+.group-chevron {
+  color: var(--text-faint);
+  width: 15px;
+  height: 15px;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.group-chevron.open {
+  transform: rotate(180deg);
+}
+
+/* Violation items */
+.violation-list {
+  list-style: none;
+}
+
+.violation-item {
+  padding: 11px 16px 11px 46px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.violation-item:last-child {
+  border-bottom: none;
+}
+
+.violation-item-inner {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.violation-bullet {
+  color: var(--red-border);
+  font-size: 0.65rem;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+
+/* ─── New scan button / footer ────────────────────────────── */
+.results-actions {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+}
+
+.new-scan-btn {
+  padding: 10px 22px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--bg);
+  transition: border-color 0.15s, background 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.new-scan-btn:hover {
+  border-color: var(--text);
+  background: var(--surface);
+}

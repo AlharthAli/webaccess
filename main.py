@@ -121,4 +121,47 @@ def get_scan_history(url: str):
 
     conn.close()
     return rows
+
+@app.get("/scans/compare")
+def compare_scans(url: str):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT id FROM scans WHERE url = %s ORDER BY scanned_at DESC LIMIT 2",
+        (url,)
+    )
+    scan_ids = cursor.fetchall()
+
+    if len(scan_ids) < 2:
+        conn.close()
+        return {"message": "Not enough scan history to compare. Scan this URL at least twice."}
+
+    latest_scan_id = scan_ids[0][0]
+    previous_scan_id = scan_ids[1][0]
+
+    cursor.execute(
+        "SELECT check_type FROM violations WHERE scan_id = %s",
+        (latest_scan_id,)
+    )
+    latest_types = set(row[0] for row in cursor.fetchall())
+
+    cursor.execute(
+        "SELECT check_type FROM violations WHERE scan_id = %s",
+        (previous_scan_id,)
+    )
+    previous_types = set(row[0] for row in cursor.fetchall())
+
+    conn.close()
+
+    newly_introduced = latest_types - previous_types
+    fixed = previous_types - latest_types
+
+    return {
+        "url": url,
+        "latest_scan_id": latest_scan_id,
+        "previous_scan_id": previous_scan_id,
+        "newly_introduced": list(newly_introduced),
+        "fixed": list(fixed)
+    }
     

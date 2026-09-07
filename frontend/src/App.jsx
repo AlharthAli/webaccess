@@ -5,8 +5,7 @@ import './App.css'
 import InputScreen   from './components/InputScreen'
 import LoadingScreen from './components/LoadingScreen'
 import ResultsView   from './components/ResultsView'
-
-const API_BASE = 'http://webaccess-alb-618707564.us-east-2.elb.amazonaws.com'
+import { API_BASE }  from './api'
 
 export default function App() {
   const [view, setView]       = useState('input')   // 'input' | 'loading' | 'results'

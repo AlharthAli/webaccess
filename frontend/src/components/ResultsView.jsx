@@ -1,5 +1,9 @@
-import { CheckCircle2, Globe, Hash, RotateCcw } from 'lucide-react'
+import { useState } from 'react'
+import { CheckCircle2, Globe, Hash, RotateCcw, History, GitCompare } from 'lucide-react'
 import ViolationGroup from './ViolationGroup'
+import HistoryPanel   from './HistoryPanel'
+import ComparePanel   from './ComparePanel'
+import { API_BASE }   from '../api'
 
 export default function ResultsView({ result, onReset }) {
   const { scan_id, url, total_violations, violations } = result
@@ -16,6 +20,54 @@ export default function ResultsView({ result, onReset }) {
     month: 'short', day: 'numeric', year: 'numeric',
     hour: 'numeric', minute: '2-digit',
   })
+
+  // ── History panel state ──────────────────────────────────
+  const [historyOpen,    setHistoryOpen]    = useState(false)
+  const [historyData,    setHistoryData]    = useState(null)
+  const [historyLoading, setHistoryLoading] = useState(false)
+  const [historyError,   setHistoryError]   = useState(null)
+
+  async function toggleHistory() {
+    if (historyOpen) { setHistoryOpen(false); return }
+    setHistoryOpen(true)
+    if (historyData !== null) return  // already fetched
+    setHistoryLoading(true)
+    setHistoryError(null)
+    try {
+      const res = await fetch(`${API_BASE}/scans?url=${encodeURIComponent(url)}`)
+      if (!res.ok) throw new Error(`${res.status}`)
+      const data = await res.json()
+      setHistoryData(data)
+    } catch (err) {
+      setHistoryError(`Could not load history: ${err.message}`)
+    } finally {
+      setHistoryLoading(false)
+    }
+  }
+
+  // ── Compare panel state ──────────────────────────────────
+  const [compareOpen,    setCompareOpen]    = useState(false)
+  const [compareData,    setCompareData]    = useState(null)
+  const [compareLoading, setCompareLoading] = useState(false)
+  const [compareError,   setCompareError]   = useState(null)
+
+  async function toggleCompare() {
+    if (compareOpen) { setCompareOpen(false); return }
+    setCompareOpen(true)
+    if (compareData !== null) return  // already fetched
+    setCompareLoading(true)
+    setCompareError(null)
+    try {
+      const res = await fetch(`${API_BASE}/scans/compare?url=${encodeURIComponent(url)}`)
+      if (!res.ok) throw new Error(`${res.status}`)
+      const data = await res.json()
+      setCompareData(data)
+    } catch (err) {
+      setCompareError(`Could not load comparison: ${err.message}`)
+    } finally {
+      setCompareLoading(false)
+    }
+  }
 
   return (
     <div className="results-view">
@@ -71,7 +123,54 @@ export default function ResultsView({ result, onReset }) {
         </>
       )}
 
-      {/* ── New scan ── */}
+      {/* ── History & Compare panels ── */}
+      <div className="secondary-panels">
+        {/* History */}
+        <div className="panel">
+          <button
+            className={`panel-toggle ${historyOpen ? 'open' : ''}`}
+            onClick={toggleHistory}
+            aria-expanded={historyOpen}
+          >
+            <History size={15} className="panel-toggle-icon" />
+            <span className="panel-toggle-label">Scan History</span>
+            <span className="panel-toggle-chevron" aria-hidden="true">
+              {historyOpen ? '▲' : '▼'}
+            </span>
+          </button>
+          {historyOpen && (
+            <HistoryPanel
+              rows={historyData}
+              loading={historyLoading}
+              error={historyError}
+            />
+          )}
+        </div>
+
+        {/* Compare */}
+        <div className="panel">
+          <button
+            className={`panel-toggle ${compareOpen ? 'open' : ''}`}
+            onClick={toggleCompare}
+            aria-expanded={compareOpen}
+          >
+            <GitCompare size={15} className="panel-toggle-icon" />
+            <span className="panel-toggle-label">Compare to Last Scan</span>
+            <span className="panel-toggle-chevron" aria-hidden="true">
+              {compareOpen ? '▲' : '▼'}
+            </span>
+          </button>
+          {compareOpen && (
+            <ComparePanel
+              data={compareData}
+              loading={compareLoading}
+              error={compareError}
+            />
+          )}
+        </div>
+      </div>
+
+      {/* ── Bottom action ── */}
       <div className="results-actions">
         <button className="new-scan-btn" onClick={onReset}>
           <RotateCcw size={14} />

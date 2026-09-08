@@ -181,3 +181,17 @@ def compare_scans(url: str):
         "fixed": list(fixed)
     }
     
+def linearize(channel):
+    if channel <= 0.03928:
+        return channel / 12.92
+    else:
+        return ((channel + 0.055) / 1.055) ** 2.4
+
+def get_luminance(r, g, b):
+    r_norm = linearize(r / 255)
+    g_norm = linearize(g / 255)
+    b_norm = linearize(b / 255)
+    return 0.2126 * r_norm + 0.7152 * g_norm + 0.0722 * b_norm
+
+print(get_luminance(255, 255, 255))
+print(get_luminance(0, 0, 0))

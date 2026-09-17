@@ -100,6 +100,25 @@ def scan_website(request: ScanRequest):
         if link_text in vague_phrases:
             violations.append({"check_type": "vague_link_text", "description": f"Non-descriptive link text: '{link.text}'"})
 
+    elements_with_style = soup.find_all(style=True)
+    for el in elements_with_style:
+        style = el.get("style", "")
+
+        color_match = re.search(r'color:\s*(rgb\([^)]+\))', style)
+        bg_match = re.search(r'background-color:\s*(rgb\([^)]+\))', style)
+
+        if color_match and bg_match:
+            text_rgb = parse_rgb(color_match.group(1))
+            bg_rgb = parse_rgb(bg_match.group(1))
+
+            if text_rgb and bg_rgb:
+                ratio = get_contrast_ratio(text_rgb, bg_rgb)
+                if ratio < 4.5:
+                    violations.append({
+                        "check_type": "low_contrast",
+                        "description": f"Low contrast ratio ({ratio:.2f}:1, needs 4.5:1): {el.name} with style '{style}'"
+                    })
+
     conn = get_connection()
     cursor = conn.cursor()
 
@@ -124,7 +143,6 @@ def scan_website(request: ScanRequest):
         "total_violations": len(violations),
         "violations": violations
     }
-
 @app.get("/scans")
 def get_scan_history(url: str):
     conn = get_connection()

@@ -6,6 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 import psycopg2
 import os
+import re
 from dotenv import load_dotenv
 from datetime import datetime
 
@@ -193,5 +194,17 @@ def get_luminance(r, g, b):
     b_norm = linearize(b / 255)
     return 0.2126 * r_norm + 0.7152 * g_norm + 0.0722 * b_norm
 
-print(get_luminance(255, 255, 255))
-print(get_luminance(0, 0, 0))
+def get_contrast_ratio(rgb1, rgb2):
+    lum1 = get_luminance(rgb1[0], rgb1[1], rgb1[2])
+    lum2 = get_luminance(rgb2[0], rgb2[1], rgb2[2])
+
+    lighter = max(lum1, lum2)
+    darker = min(lum1, lum2)
+
+    return (lighter + 0.05) / (darker + 0.05)
+
+def parse_rgb(color_string):
+    match = re.search(r'rgb\((\d+),\s*(\d+),\s*(\d+)\)', color_string)
+    if match:
+        return (int(match.group(1)), int(match.group(2)), int(match.group(3)))
+    return None

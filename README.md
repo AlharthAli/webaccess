@@ -1,6 +1,6 @@
 # WebAccess
 
-A web accessibility scanner that checks any public URL against 5 real WCAG (Web Content Accessibility Guidelines) rules and returns a structured violation report. Built because accessibility failures are invisible to sighted developers but concrete barriers for screen reader users.
+A web accessibility scanner that checks any public URL against 6 real WCAG (Web Content Accessibility Guidelines) rules and returns a structured violation report.
 
 ## Live URLs
 
@@ -41,7 +41,7 @@ AWS RDS (PostgreSQL, private subnet)
 - ECS Service: `webaccess-service` (Fargate, 1 task)
 - ALB: `webaccess-alb-618707564` — listener on port 80
 
-## The 5 Accessibility Checks
+## The 6 Accessibility Checks
 
 Screen reader users navigate pages entirely by keyboard — they jump between headings, links, and form controls to build a mental map of a page. They can't see layout, color, or visual grouping. These five checks target the gaps that most commonly create real barriers.
 
@@ -59,6 +59,9 @@ Form inputs with no `<label>` (linked via `for`/`id`) and no `aria-label` are in
 
 ### `vague_link_text`
 Screen readers can list all links on a page. Link text like "click here", "read more", or "here" is meaningless in that context — users have no idea where the link goes. Descriptive link text is one of the highest-impact accessibility fixes.
+
+### `low_contrast`
+Text with insufficient contrast against its background is difficult or impossible to read for users with low vision or color blindness. This check calculates the WCAG relative luminance and contrast ratio formulas directly from inline `style` attributes (`color` and `background-color` in `rgb()` format), flagging any pair below the 4.5:1 AA threshold for normal text. Note: this only catches contrast issues declared inline — colors set via external stylesheets or CSS classes aren't visible to this check, since that would require a full rendering engine to resolve.
 
 ## API Endpoints
 

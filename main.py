@@ -21,9 +21,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Return JSON on unhandled exceptions so CORS headers are always present.
+# Return JSON on unhandled exceptions so CORS headers are always present
 # Raw uvicorn 500s have no CORS headers, which causes browsers to silently
-# block the response and report a network error instead of the real status.
+# block the response and report a network error instead of the real status
 @app.exception_handler(Exception)
 async def unhandled_exception_handler(request: Request, exc: Exception):
     return JSONResponse(status_code=500, content={"detail": str(exc)})

@@ -58,10 +58,10 @@ def scan_website(request: ScanRequest):
     for img in images:
         if img.get("aria-hidden") == "true":
             continue
-        alt_text = img.get("alt")
-        if not alt_text:
+        alt_Text = img.get("alt")
+        if not alt_Text:
             violations.append({"check_type": "missing_alt_text", "description": f"Missing alt text: {img}"})
-
+            
     headings = soup.find_all(["h1", "h2", "h3", "h4", "h5", "h6"])
     levels = []
     for h in headings:
